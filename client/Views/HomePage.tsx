@@ -23,10 +23,16 @@ const HomePage = ({ navigation }) => {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          title="Checkout"
-          onPress={() => navigateToScreen("Checkout")}
+          title="Panier"
+          onPress={() => navigateToScreen("Panier")}
         />
       </View>
+      <View style={styles.buttonContainer}>
+              <Button
+                title="Mes Achats"
+                onPress={() => navigateToScreen("Historique")}
+              />
+            </View>
     </View>
   );
 };

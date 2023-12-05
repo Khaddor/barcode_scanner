@@ -7,6 +7,11 @@ export default function Scan({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Not yet scanned");
+  const [inputField, setInputField] = useState("");
+
+  const navigateToScreen = (screenName) => {
+    navigation.navigate(screenName);
+  };
 
   const askCameraPermission = () => {
     (async () => {
@@ -131,7 +136,7 @@ origin/main  }
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.panierButton}
-
+        onPress={() => navigateToScreen("Panier")}
       >
         <Text style={styles.panierButtonText}>Panier</Text>
       </TouchableOpacity>
@@ -147,7 +152,7 @@ origin/main  }
         <TouchableOpacity
           style={styles.addToCartButton}
           onPress={() => {
-            addItem(1);
+            addItem(parseInt(inputField));
           }}
         >
           <Text style={styles.addToCartButtonText}>Ajouter au Panier</Text>
@@ -157,12 +162,12 @@ origin/main  }
         style={styles.articleNumber}
         placeholder="Article number"
         keyboardType="numeric"
-        value="1"
+        onChangeText={(text) => setInputField(text)}
       />
       <TouchableOpacity
         style={styles.addToCartButton}
         onPress={() => {
-          addItem(1);
+          addItem(parseInt(inputField));
         }}
       >
         <Text style={styles.addToCartButtonText}>Add to cart</Text>
