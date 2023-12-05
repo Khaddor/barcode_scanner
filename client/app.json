@@ -26,7 +26,15 @@
         "backgroundColor": "#FFFFFF"
       }
     },
-    "web": {
+    "plugins": [
+      [
+        "expo-sqlite",
+        {
+          "version": "latest"
+        }
+      ]
+    ],
+"web": {
       "favicon": "./assets/favicon.png"
     }
   }

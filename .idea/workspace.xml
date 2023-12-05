@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/CheckoutScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/CheckoutScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/Views/HomePage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/Views/ScanScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/CheckoutScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/CheckoutScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +38,19 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/home/mehdi/StudioProjects/barcode-scanner"
+    "last_opened_file_path": "/home/mehdi/StudioProjects/barcode-scanner/client",
+    "settings.editor.selected.configurable": "preferences.fileTypes"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client" />
+      <recent name="$PROJECT_DIR$/client/Views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client/Views" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -43,5 +61,8 @@
       <updated>1698148035892</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
 </project>

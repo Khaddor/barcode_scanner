@@ -1,7 +1,7 @@
 import { useStripe } from "@stripe/stripe-react-native";
 import Constants from "expo-constants";
 import React, { useEffect, useState } from "react";
-import { Alert, Text, Button, SafeAreaView, View } from "react-native";
+import { Alert, Text, Button, SafeAreaView, View, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function CheckoutScreen() {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -85,14 +85,54 @@ export default function CheckoutScreen() {
         initializePaymentSheet();
     }, []);
 
-    return (
-        <SafeAreaView>
-            <Text>Payment</Text>
-            <Button
-                disabled={!loading}
-                title="Checkout"
-                onPress={openPaymentSheet}
-            />
-        </SafeAreaView>
-    );
-}
+   return (
+          <SafeAreaView style={styles.container}>
+              <View style={styles.topContent}>
+                  <Text style={styles.paymentText}>Payment</Text>
+              </View>
+              <View style={styles.bottomContent}>
+                  {/* Your content here */}
+              </View>
+              <TouchableOpacity
+                  style={styles.checkoutButton}
+                  disabled={!loading}
+                  onPress={openPaymentSheet}
+              >
+                  <Text style={styles.buttonText}>Checkout</Text>
+              </TouchableOpacity>
+          </SafeAreaView>
+      );
+  }
+
+  const styles = StyleSheet.create({
+      container: {
+          flex: 1,
+      },
+      topContent: {
+          flex: 0.2,
+          justifyContent: 'center', // Center the text vertically
+          alignItems: 'center', // Center the text horizontally
+      },
+      bottomContent: {
+          flex: 1,
+          justifyContent: 'center', // Center your content vertically
+          alignItems: 'center', // Center your content horizontally
+      },
+      paymentText: {
+          fontSize: 30,
+      },
+      checkoutButton: {
+          backgroundColor: '#3a86ff',
+          marginBottom: 10,
+          marginLeft:5,
+          marginRight:5,
+          padding: 10,
+          borderRadius: 5,
+          alignItems: 'center',
+          justifyContent: 'center',
+      },
+      buttonText: {
+          color: 'white',
+          fontSize: 18,
+      },
+  });
