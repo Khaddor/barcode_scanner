@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="Added HomePage View and Scanning an Item">
-      <change afterPath="$PROJECT_DIR$/client/Views/Historique.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/Views/Panier.tsx" afterDir="false" />
+    <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="Added History for purchases (Mes Achats)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Views/CheckoutScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/CheckoutScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Views/Historique.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/Historique.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Views/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Views/ScanScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/ScanScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Views/ScanScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/ScanItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,17 +29,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "/home/mehdi/StudioProjects/barcode-scanner-main",
-    "settings.editor.selected.configurable": "preferences.fileTypes"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mehdi/StudioProjects/barcode-scanner-main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/client" />
@@ -65,11 +65,19 @@
       <option name="project" value="LOCAL" />
       <updated>1701797455351</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added History for purchases (Mes Achats)">
+      <created>1701807005470</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701807005470</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -96,6 +104,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added HomePage View and Scanning an Item" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added HomePage View and Scanning an Item" />
+    <MESSAGE value="Added History for purchases (Mes Achats)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added History for purchases (Mes Achats)" />
   </component>
 </project>

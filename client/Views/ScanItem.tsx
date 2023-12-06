@@ -1,23 +1,22 @@
 import { Camera } from "expo-camera";
 import React, { useEffect, useState } from "react";
-import { Alert, Text, Button, View, TextInput, TouchableOpacity } from "react-native";
+import { Alert, Text, View, TextInput, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import { db } from "../db";
 
 export default function Scan({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState("Not yet scanned");
+  const [text, setText] = useState("Scanner un Article");
   const [inputField, setInputField] = useState("");
 
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
   };
 
-  const askCameraPermission = () => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
+  const askCameraPermission = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    setHasPermission(status === "granted");
   };
 
   useEffect(() => {
@@ -28,10 +27,10 @@ export default function Scan({ navigation }) {
         [],
         (_, { rows }) => {
           const items = rows._array;
-          console.log("Items in panier:", items);
+          console.log("Articles dans le panier:", items);
         },
         (error) => {
-          console.error("Error selecting items from panier:", error);
+          console.error("Problème rencontré lors de la récupération des articles du Panier:", error);
         }
       );
     });
@@ -54,7 +53,7 @@ export default function Scan({ navigation }) {
             resolve(count > 0);
           },
           (error) => {
-            console.error("Error checking item existence:", error);
+            console.error("Produit Non-existant:", error);
             reject(error);
           }
         );
@@ -70,19 +69,19 @@ export default function Scan({ navigation }) {
       if (response.status === 200) {
         const item = await response.json();
         if (item) {
-          const AvailableItem = await checkItem(itemId);
+          const isItemInCart = await checkItem(itemId);
 
-          if (AvailableItem) {
+          if (isItemInCart) {
             db.transaction((tx) => {
               tx.executeSql(
                 "UPDATE Panier SET quantity = quantity + 1 WHERE itemId = ?",
                 [itemId],
                 (_, result) => {
-                  console.log("Quantity updated for", item.name);
-                  Alert.alert("Article ajouté au panier");
+                  console.log("Quantité Modifiée avec Succès ", item.name);
+                  Alert.alert("Article ajouté au panier avec Succès");
                 },
                 (error) => {
-                  console.error("Error updating quantity:", error);
+                  console.error("Problème rencontré lors de la mise à jour du Panier:", error);
                 }
               );
             });
@@ -93,60 +92,65 @@ export default function Scan({ navigation }) {
                 [item.name, item.price, itemId, 1],
                 (_, { insertId }) => {
                   console.log("Article ajouté au panier avec ID:", insertId);
-                  Alert.alert("Article ajouté au panier");
+                  Alert.alert("Article ajouté au panier avec succès");
                 },
                 (error) => {
-                  console.error("Error adding item to cart:", error);
+                  console.error("Problème lors de l'ajout de l'article dans le Panier", error);
                 }
               );
             });
           }
         } else {
-          Alert.alert("Item not found with id: " + itemId);
+          Alert.alert("Article Non-trouvé: " + itemId);
         }
       } else {
-        Alert.alert("Error", "Item not found or backend offline");
+        Alert.alert("Erreur", "Article non-Trouvé");
       }
     } catch (error) {
-      console.error("Error while adding item to cart:", error);
-      Alert.alert("Error", "Failed to add item to cart");
+      console.error("Problème lors de l'ajout de l'article dans le Panier:", error);
+      Alert.alert("Erreur", "Problème lors de l'ajout de l'article");
     }
   };
 
   if (hasPermission === null) {
     return (
       <View style={styles.container}>
-        <Text>Requesting for camera permission</Text>
+        <Text>Demande de permission pour utiliser la caméra</Text>
       </View>
     );
   }
   if (hasPermission === false) {
     return (
       <View style={styles.container}>
-        <Text style={{ margin: 10 }}>No access to camera</Text>
-        <Button
-          title={"Allow Camera"}
+        <Text style={styles.noCameraAccessText}>Pas d'accès à la caméra</Text>
+        <TouchableOpacity
+          style={styles.cameraPermissionButton}
           onPress={() => askCameraPermission()}
-        />
+        >
+          <Text style={styles.cameraPermissionButtonText}>Autoriser la caméra</Text>
+        </TouchableOpacity>
       </View>
     );
-origin/main  }
+  }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.panierButton}
-        onPress={() => navigateToScreen("Panier")}
-      >
-        <Text style={styles.panierButtonText}>Panier</Text>
-      </TouchableOpacity>
-      <View style={styles.box}>
+      <View style={styles.navbar}>
+        <TouchableOpacity
+          style={styles.navbarIcon}
+          onPress={() => navigateToScreen("Panier")}
+        >
+          <FontAwesome name="shopping-cart" size={24} color="white" />
+          <Text style={styles.navbarText}>Panier</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.cameraContainer}>
         <Camera
           onBarCodeScanned={scanned ? undefined : handleBarCode}
-          style={{ height: 400, width: 400 }}
+          style={styles.camera}
         />
       </View>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.scanResultText}>{text}</Text>
 
       {scanned && (
         <TouchableOpacity
@@ -160,7 +164,7 @@ origin/main  }
       )}
       <TextInput
         style={styles.articleNumber}
-        placeholder="Article number"
+        placeholder="ou tapez le numéro d'article"
         keyboardType="numeric"
         onChangeText={(text) => setInputField(text)}
       />
@@ -170,7 +174,7 @@ origin/main  }
           addItem(parseInt(inputField));
         }}
       >
-        <Text style={styles.addToCartButtonText}>Add to cart</Text>
+        <Text style={styles.addToCartButtonText}>Ajouter au Panier</Text>
       </TouchableOpacity>
     </View>
   );
@@ -179,45 +183,91 @@ origin/main  }
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#E5E4E2",
     alignItems: "center",
     justifyContent: "center",
   },
-  text: {
+  noCameraAccessText: {
+    margin: 10,
     fontSize: 16,
-    marginTop: 25,
+    color: "#555",
+    textAlign: "center",
   },
-  box: {
+  scanResultText: {
+    fontSize: 18,
+    marginTop: 20,
+    color: "#333",
+    textAlign: "center",
+  },
+  cameraContainer: {
     alignItems: "center",
     justifyContent: "center",
     height: 300,
     width: 300,
     overflow: "hidden",
     borderRadius: 30,
+    backgroundColor: "#fff",
+    marginTop: 20,
   },
   articleNumber: {
-    marginLeft: 5,
-  },
-  panierButton: {
-    position: "absolute",
-    top: 20,
-    right: 20,
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-  },
-  panierButtonText: {
-    color: "white",
-    fontWeight: "bold",
+    marginVertical: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    fontSize: 16,
   },
   addToCartButton: {
     backgroundColor: "tomato",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 20,
   },
   addToCartButtonText: {
     color: "white",
     fontWeight: "bold",
+    fontSize: 16,
+  },
+  camera: {
+    height: 400,
+    width: 400,
+  },
+  navbar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#2ecc71",
+    height: 60,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#999",
+  },
+  navbarIcon: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  navbarText: {
+    color: "white",
+    marginLeft: 10,
+    fontSize: 18,
+  },
+  cameraPermissionButton: {
+    backgroundColor: "blue",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  cameraPermissionButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 };

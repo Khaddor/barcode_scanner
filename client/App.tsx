@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CheckoutScreen from './Views/CheckoutScreen';
 import HomePage from './Views/HomePage';
-import Scan from './Views/ScanScreen';
+import Scan from './Views/ScanItem';
 import Panier from './Views/Panier';
 import Historique from './Views/Historique';
 
@@ -23,7 +23,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="HomePage">
           <Stack.Screen name="HomePage" component={HomePage} />
-          <Stack.Screen name="Checkout" component={CheckoutScreen} />
+          <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
           <Stack.Screen name="Scan" component={Scan} />
           <Stack.Screen name="Panier" component={Panier} />
           <Stack.Screen name="Historique" component={Historique} />

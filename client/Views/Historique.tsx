@@ -24,7 +24,6 @@ export default function Historique() {
 
   useFocusEffect(
     React.useCallback(() => {
-      // Fetch purchase history data from the Achats table
       db.transaction(
         (tx) => {
           tx.executeSql(
@@ -38,7 +37,7 @@ export default function Historique() {
               setPurchaseHistory(historyData);
             },
             (error) => {
-              console.error("Error fetching purchase history:", error);
+              console.error("Problème rencontré lors de récupération des achatss:", error);
             }
           );
         },
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#FFF", // Set the background color
+    backgroundColor: "#FFF",
   },
   purchaseItem: {
     flexDirection: "row",
