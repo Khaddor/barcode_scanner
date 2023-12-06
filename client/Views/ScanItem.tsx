@@ -63,7 +63,10 @@ export default function Scan({ navigation }) {
 
   const addItem = async (itemId) => {
     try {
-      const response = await fetch(`http://172.20.10.4:8080/items/${itemId}`);
+      //const response = await fetch(`http://172.20.10.4:8080/items/${itemId}`);
+      const response = await fetch(`http://192.168.24.96:8080/items/${itemId}`);
+
+
       console.log("API Response Status:", response.status);
 
       if (response.status === 200) {

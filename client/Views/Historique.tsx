@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FlatList, Text, View,Button, StyleSheet, TouchableOpacity } from "react-native";
+import { Ionicons, AntDesign} from "@expo/vector-icons";
 import { db } from "../db";
 import { useFocusEffect } from "@react-navigation/native";
 
 const PurchaseItem = ({ item }) => (
   <View style={styles.purchaseItem}>
     <View style={styles.statusButton}>
-      <Ionicons name="md-checkmark" size={24} color="#fff" />
+      <AntDesign name="tags" size={24} />
     </View>
     <View style={styles.purchaseDetails}>
       <Text style={styles.dateText}>{item.formattedDate}</Text>
@@ -22,6 +22,7 @@ const PurchaseItem = ({ item }) => (
 export default function Historique() {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
 
+
   useFocusEffect(
     React.useCallback(() => {
       db.transaction(
@@ -35,6 +36,7 @@ export default function Historique() {
                 formattedDate: formatPurchaseDate(item.purchaseDate),
               }));
               setPurchaseHistory(historyData);
+              console.log(purchaseHistory)
             },
             (error) => {
               console.error("Problème rencontré lors de récupération des achatss:", error);
@@ -70,8 +72,10 @@ export default function Historique() {
           renderItem={({ item }) => <PurchaseItem item={item} />}
           keyExtractor={(item) => item.id.toString()}
         />
+
       )}
     </View>
+
   );
 }
 
@@ -95,7 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e32f45",
   },
   purchaseDetails: {
     flex: 1,

@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="Added History for purchases (Mes Achats)">
+    <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="Edited and Added some Styling to views">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Views/Historique.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/Historique.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Views/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/HomePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Views/ScanScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/ScanItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Views/Panier.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/Panier.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/Views/ScanItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/ScanItem.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +69,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701807005470</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Edited and Added some Styling to views">
+      <created>1701876135061</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701876135061</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -105,6 +109,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added HomePage View and Scanning an Item" />
     <MESSAGE value="Added History for purchases (Mes Achats)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added History for purchases (Mes Achats)" />
+    <MESSAGE value="Edited and Added some Styling to views" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edited and Added some Styling to views" />
   </component>
 </project>

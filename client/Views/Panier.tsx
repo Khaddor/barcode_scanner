@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, FlatList } from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { db } from "../db";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -9,6 +9,7 @@ import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
 
 const stripePK = Constants.expoConfig.extra.stripePK;
+
 type Item = {
   id: number;
   name: string;
@@ -30,12 +31,7 @@ function PanierItem({
 
   return (
     <View style={containerStyle}>
-      <AntDesign
-        name="scan1"
-        size={45}
-        color="gray"
-        style={imageStyle}
-      />
+      <AntDesign name="tags" size={45} color="gray" style={imageStyle} />
 
       <View style={textStyle}>
         <Text>{item.name}</Text>
@@ -108,8 +104,6 @@ export default function Panier() {
       amount: item.quantity * 100,
     }));
 
-    console.log("New Checkout Total JSON:", newCheckoutTotalJson);
-
     setCheckoutTotalJson(newCheckoutTotalJson);
   }, [cartItems]);
 
@@ -121,8 +115,6 @@ export default function Panier() {
             tx.executeSql("SELECT * FROM Panier", [], (_, { rows }) => {
               const cartData = rows._array;
               setCartItems(cartData);
-              console.log("Data Fetched Successfully", cartItems);
-              // Calculate and set the initial total
               const initialTotal = cartData.reduce(
                 (acc, item) => acc + item.price * item.quantity,
                 0
@@ -139,17 +131,16 @@ export default function Panier() {
       );
     }, [])
   );
+
   const decreaseQuantity = (itemId: number, itemPrice: number) => {
     db.transaction((tx) => {
       tx.executeSql(
         "UPDATE Panier SET quantity = quantity - 1 WHERE itemId = ?",
         [itemId],
         (_, result) => {
-          // Update the local state with the updated cart items
           const updatedItems = cartItems.map((item) => {
             if (item.itemId === itemId) {
               if (item.quantity - 1 === 0) {
-                // If quantity becomes 0, remove the item from the database
                 tx.executeSql(
                   "DELETE FROM Panier WHERE itemId = ?",
                   [itemId],
@@ -171,7 +162,7 @@ export default function Panier() {
             }
             return item;
           });
-          setTotal(total - itemPrice); // Update the total price
+          setTotal(total - itemPrice);
           setCartItems(updatedItems);
         },
         (error) => {
@@ -187,7 +178,6 @@ export default function Panier() {
         "UPDATE Panier SET quantity = quantity + 1 WHERE itemId = ?",
         [itemId],
         (_, result) => {
-          // Update the local state with the updated cart items
           const updatedItems = cartItems.map((item) => {
             if (item.itemId === itemId) {
               return {
@@ -198,7 +188,7 @@ export default function Panier() {
             return item;
           });
           setCartItems(updatedItems);
-          setTotal(total + itemPrice); // Update the total price
+          setTotal(total + itemPrice);
         },
         (error) => {
           console.error("Error increasing quantity:", error);
@@ -210,21 +200,19 @@ export default function Panier() {
   const clearCart = () => {
     db.transaction(
       (tx) => {
-        // Drop the existing panier table
         tx.executeSql(
           "DROP TABLE IF EXISTS Panier",
           [],
           () => {
             console.log("Cart table dropped.");
 
-            // Recreate the panier table with the same structure
             tx.executeSql(
               "CREATE TABLE IF NOT EXISTS Panier (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price REAL, itemId INTEGER, quantity INTEGER)",
               [],
               () => {
                 console.log("Cart table recreated.");
 
-                setCartItems([]); // Clear the local state
+                setCartItems([]);
               },
               (error) => {
                 console.error("Error recreating cart table:", error);
@@ -251,42 +239,40 @@ export default function Panier() {
         </View>
       ) : (
         <View style={styles.container}>
-          <View style={styles.itemContainer}>
-            <FlatList
-              data={cartItems}
-              renderItem={({ item, index }) => (
-                <PanierItem
-                  item={item}
-                  index={index}
-                  decreaseQuantity={decreaseQuantity}
-                  increaseQuantity={increaseQuantity}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </View>
+          <FlatList
+            data={cartItems}
+            renderItem={({ item }) => (
+              <PanierItem
+                item={item}
+                decreaseQuantity={decreaseQuantity}
+                increaseQuantity={increaseQuantity}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
           <View style={styles.containerFooter}>
             <View style={styles.totalContainer}>
               <View style={styles.goodsStyle}>
                 <Icon name="ios-cart" size={20} />
                 <Text>Panier</Text>
               </View>
-
               <View style={styles.totalStyle}>
                 <Text>Total -</Text>
                 <Text>${total}</Text>
               </View>
             </View>
             <View style={styles.footerButton}>
-              <View style={styles.close}>
-                <Text onPress={clearCart} style={{ color: "#fff" }}>
-                  Vider Panier
-                </Text>
-              </View>
-
-              <View style={styles.checkoutButtonStyle}>
+              <TouchableOpacity
+                style={[styles.close, { flex: 1, marginRight: 5 }]}
+                onPress={clearCart}
+              >
+                <Text style={styles.buttonText}>Vider Panier</Text>
+              </TouchableOpacity>
+              <View
+                style={[styles.checkoutButtonStyle, { flex: 1, marginLeft: 5 }]}
+              >
                 {!showCheckout ? (
-                  <Text>none</Text>
+                  <Text style={styles.buttonText}>none</Text>
                 ) : (
                   <StripeProvider
                     publishableKey={stripePK}
@@ -310,7 +296,7 @@ export default function Panier() {
 
 const styles = {
   container: {
-    flex: 0.91,
+    flex: 1,
   },
   itemContainer: {
     flex: 4,
@@ -371,27 +357,25 @@ const styles = {
     alignItems: "center",
   },
   containerFooter: {
-    backgroundColor: "#DCDCDC",
-    flex: 1,
-    paddingRight: 15,
-    paddingLeft: 15,
-    borderTopWidth: 1,
-    borderColor: "#e2e2e2",
-  },
+     backgroundColor: "#DCDCDC",
+     padding: 15,
+     borderTopWidth: 1,
+     borderColor: "#e2e2e2",
+   },
   footerButton: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 15,
   },
   close: {
-    backgroundColor: "#7f8c8d",
+    backgroundColor: "#FA8072",
     padding: 10,
     paddingRight: 30,
     paddingLeft: 30,
     borderRadius: 3,
   },
   checkoutButtonStyle: {
-    backgroundColor: "#f39c12",
+    backgroundColor: "#00BFFF",
     padding: 10,
     paddingRight: 60,
     paddingLeft: 60,
@@ -416,8 +400,6 @@ const styles = {
     paddingLeft: 15,
     paddingRight: 15,
     paddingTop: 10,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
     borderColor: "#e2e2e2",
     backgroundColor: "#DCDCDC",
   },
@@ -426,5 +408,9 @@ const styles = {
   },
   priceTextStyle: {
     fontSize: 12,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
   },
 };
