@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, TouchableOpacity, Switch, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { db } from "../db";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -7,6 +7,7 @@ import CheckoutScreen from "./CheckoutScreen";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
+import { useDarkMode } from './DarkModeContext'; // Import the useDarkMode hook
 
 const stripePK = Constants.expoConfig.extra.stripePK;
 
@@ -26,19 +27,19 @@ function PanierItem({
   decreaseQuantity: (itemId: number, itemPrice: number) => void;
   increaseQuantity: (itemId: number, itemPrice: number) => void;
 }) {
-  const { containerStyle, imageStyle, textStyle, counterStyle, priceStyle } =
-    styles;
+  const { containerStyle, imageStyle, textStyle, counterStyle, priceStyle } = styles;
+  const { isDarkMode } = useDarkMode();
 
   return (
-    <View style={containerStyle}>
+    <View style={[containerStyle, isDarkMode && styles.darkMode]}>
       <AntDesign name="tags" size={45} color="gray" style={imageStyle} />
 
-      <View style={textStyle}>
-        <Text>{item.name}</Text>
-        <View style={priceStyle}>
-          <Text style={styles.price}>${item.price}</Text>
-        </View>
-      </View>
+     <View style={textStyle}>
+       <Text style={[styles.itemName, isDarkMode && styles.darkText]}>{item.name}</Text>
+       <View style={priceStyle}>
+         <Text style={[styles.price, isDarkMode && styles.darkText]}>${item.price}</Text>
+       </View>
+     </View>
 
       <View style={counterStyle}>
         <Icon.Button
@@ -90,6 +91,8 @@ export default function Panier() {
   const [checkoutTotalJson, setCheckoutTotalJson] = useState<any[]>([
     { id: 1, amount: 100 },
   ]);
+
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     if (checkoutTotalJson.length > 0) {
@@ -233,12 +236,12 @@ export default function Panier() {
   return (
     <>
       {cartItems.length <= 0 ? (
-        <View style={styles.noDataMessageContainer}>
+        <View style={[styles.noDataMessageContainer, isDarkMode && styles.darkMode]}>
           <AntDesign name="exclamationcircle" size={35} color="gray" />
           <Text style={styles.noDataMessageText}>No Item Added </Text>
         </View>
       ) : (
-        <View style={styles.container}>
+        <View style={[styles.container, isDarkMode && styles.darkMode]}>
           <FlatList
             data={cartItems}
             renderItem={({ item }) => (
@@ -293,42 +296,42 @@ export default function Panier() {
     </>
   );
 }
-
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#E5E4E2',
   },
-  itemContainer: {
-    flex: 4,
-  },
-  containerStyle: {
-    flexDirection: "row",
-    flex: 1,
-    borderBottomWidth: 1,
-    borderColor: "#e2e2e2",
-    padding: 10,
-    paddingLeft: 15,
-    backgroundColor: "#fff",
+  darkMode: {
+    backgroundColor: '#2c2c2c',
   },
   noDataMessageText: {
     fontSize: 15,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 50,
-    color: "gray",
+    color: 'gray',
   },
   noDataMessageContainer: {
     marginTop: 80,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 5,
-    color: "gray",
+    color: 'gray',
+  },
+  containerStyle: {
+    flexDirection: 'row',
+    flex: 1,
+    borderBottomWidth: 1,
+    borderColor: '#e2e2e2',
+    padding: 10,
+    paddingLeft: 15,
+    backgroundColor: '#fff',
   },
   lastItemStyle: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     padding: 10,
     paddingLeft: 15,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   imageStyle: {
     width: 50,
@@ -337,80 +340,69 @@ const styles = {
   },
   textStyle: {
     flex: 2,
-    justifyContent: "center",
+    justifyContent: 'center',
+    color: '#000',
+  },
+  darkText: {
+    color: '#FFFFFF',
   },
   price: {
-    color: "white",
+    color: '#fff',
     fontSize: 13,
   },
   priceStyle: {
-    backgroundColor: "green",
+    backgroundColor: 'green',
     width: 40,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 3,
     borderRadius: 3,
   },
   counterStyle: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   containerFooter: {
-     backgroundColor: "#DCDCDC",
-     padding: 15,
-     borderTopWidth: 1,
-     borderColor: "#e2e2e2",
-   },
+    backgroundColor: '#DCDCDC',
+    padding: 15,
+    borderTopWidth: 1,
+    borderColor: '#e2e2e2',
+  },
   footerButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 15,
   },
   close: {
-    backgroundColor: "#FA8072",
+    backgroundColor: '#FA8072',
     padding: 10,
     paddingRight: 30,
     paddingLeft: 30,
     borderRadius: 3,
   },
   checkoutButtonStyle: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: '#00BFFF',
     padding: 10,
     paddingRight: 60,
     paddingLeft: 60,
     borderRadius: 3,
   },
   totalContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingTop: 15,
   },
   goodsStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   totalStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  basketContainerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 10,
-    borderColor: "#e2e2e2",
-    backgroundColor: "#DCDCDC",
-  },
-  bagsTextStyle: {
-    fontSize: 12,
-  },
-  priceTextStyle: {
-    fontSize: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   buttonText: {
-    color: "#fff",
-    textAlign: "center",
+    color: '#fff',
+    textAlign: 'center',
   },
-};
+});

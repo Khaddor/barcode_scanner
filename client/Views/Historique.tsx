@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, View,Button, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons, AntDesign} from "@expo/vector-icons";
+import { FlatList, Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { db } from "../db";
 import { useFocusEffect } from "@react-navigation/native";
+import { useDarkMode } from './DarkModeContext'; // Import the useDarkMode hook
 
-const PurchaseItem = ({ item }) => (
-  <View style={styles.purchaseItem}>
-    <View style={styles.statusButton}>
-      <AntDesign name="tags" size={24} />
+const PurchaseItem = ({ item }) => {
+  const { purchaseItem, statusButton, purchaseDetails, dateText, text, priceText, price, darkMode, lightText, darkIcon } = styles;
+  const { isDarkMode } = useDarkMode();
+
+  return (
+    <View style={[ purchaseItem , isDarkMode && styles.darkMode]}>
+
+      <View style={[statusButton, isDarkMode ? darkMode : {}]}>
+        <AntDesign name="tags" size={24} color={isDarkMode ? 'white' : 'black'} style={darkIcon} />
+      </View>
+      <View style={purchaseDetails}>
+        <Text style={[dateText, isDarkMode ? lightText : {}]}>{item.formattedDate}</Text>
+        <Text style={[text, isDarkMode ? lightText : {}]}>Purchased</Text>
+      </View>
+      <TouchableOpacity style={[price, isDarkMode && darkMode]}>
+        <Text style={priceText}>€{item.price}</Text>
+      </TouchableOpacity>
     </View>
-    <View style={styles.purchaseDetails}>
-      <Text style={styles.dateText}>{item.formattedDate}</Text>
-      <Text style={styles.text}>Purchased</Text>
-    </View>
-    <TouchableOpacity style={styles.price}>
-      <Text style={styles.priceText}>€{item.price}</Text>
-    </TouchableOpacity>
-  </View>
-);
+  );
+};
 
 export default function Historique() {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
-
+  const { container, darkMode, lightText } = styles;
+  const { isDarkMode } = useDarkMode();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -36,10 +44,9 @@ export default function Historique() {
                 formattedDate: formatPurchaseDate(item.purchaseDate),
               }));
               setPurchaseHistory(historyData);
-              console.log(purchaseHistory)
             },
             (error) => {
-              console.error("Problème rencontré lors de récupération des achatss:", error);
+              console.error("Problème rencontré lors de récupération des achats:", error);
             }
           );
         },
@@ -63,19 +70,18 @@ export default function Historique() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[container, isDarkMode && darkMode]}>
       {purchaseHistory.length === 0 ? (
-        <Text>No purchase history available.</Text>
+        <Text style={isDarkMode && lightText}>No purchase history available.</Text>
       ) : (
         <FlatList
+        style={isDarkMode && lightText}
           data={purchaseHistory}
           renderItem={({ item }) => <PurchaseItem item={item} />}
           keyExtractor={(item) => item.id.toString()}
         />
-
       )}
     </View>
-
   );
 }
 
@@ -85,14 +91,17 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#FFF",
   },
-  purchaseItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "#EDE7D9",
-    borderRadius: 10,
-    marginBottom: 10,
-  },
+
+purchaseItem: {
+  flexDirection: "row",
+  alignItems: "center",
+  padding: 10,
+  borderRadius: 10,
+  marginBottom: 10,
+  borderBottomWidth: 1,
+  borderColor: "#000",
+},
+
   statusButton: {
     width: 40,
     height: 40,
@@ -120,5 +129,14 @@ const styles = StyleSheet.create({
     width: 50,
     alignItems: "center",
     borderRadius: 4,
+  },
+  darkMode: {
+    backgroundColor: "#2c2c2c",
+  },
+  lightText: {
+    color: 'white',
+  },
+  darkIcon: {
+    color: 'white',
   },
 });
