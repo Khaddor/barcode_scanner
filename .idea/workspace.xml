@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="Edited and Added some Styling to views">
+    <list default="true" id="b1d40f4b-f0e4-4135-a5ed-637e4ec724fa" name="Changes" comment="Styling Historique &amp;&amp; Panier View">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Views/Historique.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/Historique.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/Views/Panier.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/Panier.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/Views/ScanItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/Views/ScanItem.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701876135061</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Styling Historique &amp;&amp; Panier View">
+      <created>1701883319522</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701883319522</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -110,6 +115,7 @@
     <MESSAGE value="Added HomePage View and Scanning an Item" />
     <MESSAGE value="Added History for purchases (Mes Achats)" />
     <MESSAGE value="Edited and Added some Styling to views" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited and Added some Styling to views" />
+    <MESSAGE value="Styling Historique &amp;&amp; Panier View" />
+    <option name="LAST_COMMIT_MESSAGE" value="Styling Historique &amp;&amp; Panier View" />
   </component>
 </project>

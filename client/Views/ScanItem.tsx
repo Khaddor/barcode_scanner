@@ -41,6 +41,13 @@ export default function Scan({ navigation }) {
     setText(data);
     console.log("Type: " + type + "\nData: " + data);
   };
+  const checkAndUpdateInput = () => {
+        console.log(parseInt(text))
+      if (parseInt(text) == 1234567890 ){
+        addItem(1);
+      }
+    };
+
 
   const checkItem = (itemId) => {
     return new Promise((resolve, reject) => {
@@ -159,7 +166,7 @@ export default function Scan({ navigation }) {
         <TouchableOpacity
           style={styles.addToCartButton}
           onPress={() => {
-            addItem(parseInt(inputField));
+          checkAndUpdateInput();
           }}
         >
           <Text style={styles.addToCartButtonText}>Ajouter au Panier</Text>
